@@ -60,7 +60,7 @@ EXPOSE 8000
 #CMD ["serve", "--dev-addr=0.0.0.0:8000"]
 
 # Build this with (do note the '.' at the end of the line):
-# docker build -t tisgoud/mkdocs-material-plus .
+# docker build -t tisgoud/mkdocs-material .
 
 # Publish the image with
-# docker push tisgoud/mkdocs-material-plus:latest
+# docker push tisgoud/mkdocs-material:latest
