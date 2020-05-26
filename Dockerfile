@@ -44,7 +44,7 @@ RUN \
     'mkdocs-minify-plugin>=0.2' \
     'mkdocs-git-revision-date-localized-plugin>=0.4' \
     'mkdocs-awesome-pages-plugin>=2.2.1' \
-#    'pyembed-markdown' \
+    'pyembed-markdown' \
     'plantuml-markdown' \
   && apk del .build gcc musl-dev \
   && rm -rf /tmp/*
