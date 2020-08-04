@@ -40,6 +40,7 @@ RUN \
     git \
     git-fast-import \
     openssh \
+    lftp \
   && apk add --no-cache --virtual .build gcc musl-dev \
   && pip install --no-cache-dir . \
   && \
