@@ -49,8 +49,8 @@ RUN \
         'mkdocs-awesome-pages-plugin>=2.2.1' \
         'mkdocs-git-revision-date-localized-plugin>=0.4' \
         'mkdocs-minify-plugin>=0.3' \
-        'mkdocs-redirects>=1.0'; \
-        'plantuml-markdown' \
+        'mkdocs-redirects>=1.0' \
+        'plantuml-markdown'; \
     fi \
   && apk del .build gcc musl-dev \
   && rm -rf /tmp/*
