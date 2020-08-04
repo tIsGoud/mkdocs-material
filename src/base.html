@@ -80,7 +80,7 @@
     <!-- Site title -->
     {% block htmltitle %}
       {% if page and page.meta and page.meta.title %}
-        <title>{{ page.meta.title }}</title>
+        <title>{{ page.meta.title }} - {{ config.site_name }}</title>
       {% elif page and page.title and not page.is_homepage %}
         <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
       {% else %}
@@ -179,6 +179,14 @@
   {% else %}
     <body dir="{{ direction }}">
   {% endif %}
+
+    <!-- Experimental: set color scheme based on preference -->
+    {% if "preference" == palette.scheme %}
+      <script>
+        if (matchMedia("(prefers-color-scheme: dark)").matches)
+          document.body.setAttribute("data-md-color-scheme", "slate")
+      </script>
+    {% endif %}
 
     <!--
       State toggles - we need to set autocomplete="off" in order to reset the

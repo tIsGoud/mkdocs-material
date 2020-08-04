@@ -30,6 +30,10 @@
     src="https://img.shields.io/pypi/v/mkdocs-material.svg" 
     alt="Python Package Index"
   /></a>
+  <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/"><img 
+    src="https://img.shields.io/docker/pulls/squidfunk/mkdocs-material" 
+    alt="Docker Pulls"
+  /></a>
   <a href="https://github.com/sponsors/squidfunk"><img
     src="https://img.shields.io/static/v1?label=sponsor&message=%E2%9D%A4&logo=GitHub&color=ea4aaa"
   /></a>
@@ -43,7 +47,7 @@
 
 <p align="center">
   <a href="https://squidfunk.github.io/mkdocs-material/getting-started/">
-    <img src="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/screenshot.png" width=700 />
+    <img src="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/screenshot.png" width="700" />
   </a>
 </p>
 
@@ -117,15 +121,16 @@ For other installation methods, configuration options, and a demo, visit
 
 * **Companies** — 
   [AWS](https://awssecworkshops.com/),
+  [Datadog](https://datadoghq.dev/integrations-core/),
   [ING](https://ing-bank.github.io/baker/),
   [Lyft](https://lyft.github.io/amundsen/),
   [Netflix](https://netflix.github.io/titus/),
-  [Uber](https://uber.github.io/ludwig/getting_started/),
   [Salesforce](https://policy-sentry.readthedocs.io/en/latest/),
   [SAP](https://sap.github.io/ui5-tooling/),
   [SoundCloud](https://intervene.dev/),
   [Spotify](https://spotify.github.io/mkdocs-monorepo-plugin/),
   [Square](https://square.github.io/okhttp/),
+  [Uber](https://ludwig-ai.github.io/ludwig-docs/getting_started/),
   [Zalando](https://opensource.zalando.com/skipper/)
 
 * **Open Source** —
@@ -144,7 +149,7 @@ For other installation methods, configuration options, and a demo, visit
 
 <p>
   <a href="https://cirrus-ci.org/" target=_blank>
-    <img src="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/sponsors/cirrus-ci.svg" height=40 />
+    <img src="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/sponsors/cirrus-ci.svg" width="155" />
   </a>
 </p>
 

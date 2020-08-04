@@ -31,7 +31,7 @@ import * as path from "path"
 import { toPairs } from "ramda"
 import { minify as minjs } from "terser"
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin"
-import { Configuration } from "webpack"
+import { Configuration, ProvidePlugin } from "webpack"
 import * as AssetsManifestPlugin from "webpack-assets-manifest"
 
 /* ----------------------------------------------------------------------------
@@ -187,9 +187,10 @@ export default (_env: never, args: Configuration): Configuration[] => {
     {
       ...base,
       entry: {
-        "assets/javascripts/bundle":  "src/assets/javascripts",
-        "assets/stylesheets/main":    "src/assets/stylesheets/main.scss",
-        "assets/stylesheets/palette": "src/assets/stylesheets/palette.scss"
+        "assets/javascripts/bundle":    "src/assets/javascripts",
+        "assets/stylesheets/main":      "src/assets/stylesheets/main.scss",
+        "assets/stylesheets/overrides": "src/assets/stylesheets/overrides.scss",
+        "assets/stylesheets/palette":   "src/assets/stylesheets/palette.scss"
       },
       output: {
         path: path.resolve(__dirname, "material"),
@@ -207,93 +208,127 @@ export default (_env: never, args: Configuration): Configuration[] => {
           filename: `[name]${hash}.css`
         }),
 
-        /* FontAwesome icons */
-        new CopyPlugin([
-          { to: ".icons/fontawesome", from: "**/*.svg" },
-          { to: ".icons/fontawesome", from: "../LICENSE.txt" }
-        ], {
-          context: "node_modules/@fortawesome/fontawesome-free/svgs"
-        }),
+        /* Improve performance by skipping dependencies in watch mode */
+        ...args.watch ? [] : [
 
-        /* Material Design icons */
-        new CopyPlugin([
-          { to: ".icons/material", from: "*.svg" }
-        ], {
-          context: "node_modules/@mdi/svg/svg"
-        }),
+          /* FontAwesome icons */
+          new CopyPlugin({
+            patterns: [
+              { to: ".icons/fontawesome", from: "**/*.svg" },
+              { to: ".icons/fontawesome", from: "../LICENSE.txt" }
+            ].map(pattern => ({
+              context: "node_modules/@fortawesome/fontawesome-free/svgs",
+              ...pattern
+            }))
+          }),
 
-        /* GitHub octicons */
-        new CopyPlugin([
-          { to: ".icons/octicons", from: "*.svg" },
-          { to: ".icons/octicons", from: "../../LICENSE" }
-        ], {
-          context: "node_modules/@primer/octicons/build/svg"
-        }),
+          /* Material Design icons */
+          new CopyPlugin({
+            patterns: [
+              { to: ".icons/material", from: "*.svg" },
+              { to: ".icons/material", from: "../LICENSE" }
+            ].map(pattern => ({
+              context: "node_modules/@mdi/svg/svg",
+              ...pattern
+            }))
+          }),
 
-        /* Search stemmers and segmenters */
-        new CopyPlugin([
-          { to: "assets/javascripts/lunr", from: "min/*.js" },
-          {
-            to: "assets/javascripts/lunr/tinyseg.min.js",
-            from: "tinyseg.js",
-            transform: content => minjs(`${content}`).code!
-          }
-        ], {
-          context: "node_modules/lunr-languages"
-        }),
+          /* GitHub octicons */
+          new CopyPlugin({
+            patterns: [
+              { to: ".icons/octicons", from: "*.svg" },
+              { to: ".icons/octicons", from: "../../LICENSE" }
+            ].map(pattern => ({
+              context: "node_modules/@primer/octicons/build/svg",
+              ...pattern
+            }))
+          }),
+
+          /* Search stemmers and segmenters */
+          new CopyPlugin({
+            patterns: [
+              { to: "assets/javascripts/lunr", from: "min/*.js" },
+              {
+                to: "assets/javascripts/lunr/tinyseg.min.js",
+                from: "tinyseg.js",
+                transform: (content: Buffer) => minjs(`${content}`).code!
+              }
+            ].map(pattern => ({
+              context: "node_modules/lunr-languages",
+              ...pattern
+            }))
+          }),
+
+          /* Assets and configuration */
+          new CopyPlugin({
+            patterns: [
+              { from: ".icons/*.svg" },
+              { from: "assets/images/*" },
+              { from: "**/*.{py,yml}" }
+            ].map(pattern => ({
+              context: "src",
+              ...pattern
+            }))
+          })
+        ],
 
         /* Template files */
-        new CopyPlugin([
-          { from: ".icons/*.svg" },
-          { from: "assets/images/*" },
-          { from: "**/*.{py,yml}" },
-          {
-            from: "**/*.html",
-            transform: content => {
-              const metadata = require("./package.json")
-              const banner =
-                "{#-\n" +
-                "  This file was automatically generated - do not edit\n" +
-                "-#}\n"
+        new CopyPlugin({
+          patterns: [
+            {
+              from: "**/*.html",
+              transform: (content: Buffer) => {
+                const metadata = require("./package.json")
+                const banner =
+                  "{#-\n" +
+                  "  This file was automatically generated - do not edit\n" +
+                  "-#}\n"
 
-              /* Normalize line feeds and minify HTML */
-              const html = content.toString().replace(/\r\n/gm, "\n")
-              return banner + minhtml(html, {
-                collapseBooleanAttributes: true,
-                includeAutoGeneratedTags: false,
-                minifyCSS: true,
-                minifyJS: true,
-                removeComments: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true
-              })
+                /* Normalize line feeds and minify HTML */
+                const html = content.toString().replace(/\r\n/gm, "\n")
+                return banner + minhtml(html, {
+                  collapseBooleanAttributes: true,
+                  includeAutoGeneratedTags: false,
+                  minifyCSS: true,
+                  minifyJS: true,
+                  removeComments: true,
+                  removeScriptTypeAttributes: true,
+                  removeStyleLinkTypeAttributes: true
+                })
 
-                /* Remove empty lines without collapsing everything */
-                .replace(/^\s*[\r\n]/gm, "")
+                  /* Remove empty lines without collapsing everything */
+                  .replace(/^\s*[\r\n]/gm, "")
 
-                /* Write theme version into template */
-                .replace("$md-name$", metadata.name)
-                .replace("$md-version$", metadata.version)
+                  /* Write theme version into template */
+                  .replace("$md-name$", metadata.name)
+                  .replace("$md-version$", metadata.version)
+              }
             }
-          }
-        ], {
-          context: "src"
+          ].map(pattern => ({
+            context: "src",
+            ...pattern
+          }))
         }),
 
         /* Hooks */
         new EventHooksPlugin({
           afterEmit: () => {
 
-            /* Replace asset URLs in base template */
+            /* Replace asset URLs in templates */
             if (args.mode === "production") {
               const manifest = require("./material/assets/manifest.json")
-              const template = toPairs<string>(manifest)
-                .reduce((content, [from, to]) => {
-                  return content.replace(from, to)
-                }, fs.readFileSync("material/base.html", "utf8"))
+              for (const file of [
+                "material/base.html",
+                "material/overrides/main.html"
+              ]) {
+                const template = toPairs<string>(manifest)
+                  .reduce((content, [from, to]) => {
+                    return content.replace(new RegExp(from, "g"), to)
+                  }, fs.readFileSync(file, "utf8"))
 
-              /* Save template with replaced assets */
-              fs.writeFileSync("material/base.html", template, "utf8")
+                /* Save template with replaced assets */
+                fs.writeFileSync(file, template, "utf8")
+              }
             }
           }
         }),
@@ -335,7 +370,17 @@ export default (_env: never, args: Configuration): Configuration[] => {
         filename: `[name]${hash}.js`,
         hashDigestLength: 8,
         libraryTarget: "var"
-      }
+      },
+
+      /* Plugins */
+      plugins: [
+        ...base.plugins,
+
+        /* Search implementation */
+        new ProvidePlugin({
+          lunr: "lunr"
+        })
+      ]
     }
   ]
 }

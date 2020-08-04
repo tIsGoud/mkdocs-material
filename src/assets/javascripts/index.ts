@@ -179,7 +179,9 @@ export function initialize(config: unknown) {
 
   const keyboard$ = setupKeyboard()
 
-  patchCodeBlocks({ document$, viewport$ })
+  // Hack: only make code blocks focusable on non-touch devices
+  if (matchMedia("(hover)").matches)
+    patchCodeBlocks({ document$, viewport$ })
   patchDetails({ document$, hash$ })
   patchScripts({ document$ })
   patchSource({ document$ })
@@ -292,14 +294,14 @@ export function initialize(config: unknown) {
         return useComponent("search")
           .pipe(
             mountSearch(worker, { query$, reset$, result$ }),
-            shareReplay(1)
           )
       }),
       catchError(() => {
         useComponent("search")
           .subscribe(el => el.hidden = true) // TODO: Hack
         return NEVER
-      })
+      }),
+      shareReplay(1)
     )
 
   /* ----------------------------------------------------------------------- */

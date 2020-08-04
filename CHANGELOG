@@ -1,3 +1,72 @@
+mkdocs-material-5.5.2+insiders-1.1.0 (2020-08-03)
+
+  * Added highlighting of search results
+
+mkdocs-material-5.5.2 (2020-08-03)
+
+  * Improved highlight colors and spacing for ins, del and mark
+  * Changed some keyboard symbols for better equivalents
+  * Removed focus outline for details and code blocks on touch devices
+  * Fixed margins for Admonitions (5.5.1 regression)
+  * Fixed too small content tab labels (5.5.1 regression)
+  * Fixed icon repeating for custom admonition icons
+
+mkdocs-material-5.5.1 (2020-08-01)
+
+  * Improved typesetting by basing font-size and spacings on em
+  * Improved print view by slightly scaling down font-size
+  * Changed custom site title (metadata) to be suffixed with site name
+  * Fixed top- and bottom spacing of paragraphs inside table cells
+
+mkdocs-material-5.5.0 (2020-07-24)
+
+  * Rewrite of entire documentation
+  * Rewrite of syntax highlighting to be customizable with CSS variables
+  * Improved syntax highlighting to work with light and dark theme
+  * Improved slate color scheme to be more customizable and easier on the eyes
+  * Added licenses of icon sets to distribution files
+  * Fixed stale document titles in Google Analytics when using instant loading
+  * Fixed width of previous and next footer links for tablet and above
+  * Fixed issues with top scroll margin for footnotes
+  * Fixed top margin for tabbed content when using a JavaScript highlighter
+  * Deprecated metadata-based redirects, source links and heroes
+
+mkdocs-material-5.4.0+insiders-1.0.0 (2020-07-14)
+
+  * Added grouping of search results
+  * Added missing query terms to search result
+  * Improved search result relevance and scoring
+
+mkdocs-material-5.4.0 (2020-06-29)
+
+  * Added support to wrap searches in quotes to switch from OR to AND
+  * Fixed highlighting of numbers in search results
+
+mkdocs-material-5.3.3 (2020-06-24)
+
+  * Added Bengali translations
+  * Fixed #1773: Search for numbers does not return any result (regression)
+
+mkdocs-material-5.3.2 (2020-06-21)
+
+  * Improved search typeahead experience with non-Latin characters
+  * Fixed #1753: Japanese search doesn't work anymore
+
+mkdocs-material-5.3.1 (2020-06-20)
+
+  * Fixed #1761: Duplication of search worker when subscribing to observable
+
+mkdocs-material-5.3.0 (2020-06-15)
+
+  * Added support for color schemes based on user preference
+  * Fixed #1755: Tokenizer separator setting ignored
+
+mkdocs-material-5.2.3 (2020-06-07)
+
+  * Improved search typeahead behavior for some languages (de, fr, ...)
+  * Improved styles for scrollbars on Firefox
+  * Fixed #1741: Removed preconnect hint for Google Analytics
+
 mkdocs-material-5.2.2 (2020-05-26)
 
   * Fixed #1728: Legacy Edge doesn't support deg values in hsla colors
