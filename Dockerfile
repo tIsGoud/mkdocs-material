@@ -51,6 +51,7 @@ RUN \
         'mkdocs-minify-plugin>=0.3' \
         'mkdocs-redirects>=1.0'; \
         'plantuml-markdown' \
+    fi \
   && apk del .build gcc musl-dev \
   && rm -rf /tmp/*
 
