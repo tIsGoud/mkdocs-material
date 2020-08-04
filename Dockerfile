@@ -50,6 +50,7 @@ RUN \
         'mkdocs-git-revision-date-localized-plugin>=0.4' \
         'mkdocs-minify-plugin>=0.3' \
         'mkdocs-redirects>=1.0' \
+        'pyembed-markdown' \
         'plantuml-markdown'; \
     fi \
   && apk del .build gcc musl-dev \
