@@ -5,27 +5,30 @@ template: overrides/main.html
 # Customization
 
 Project documentation is as diverse as the projects themselves and Material for
-MkDocs is a good starting point for making it look great. However, as you write
-your documentation, you may reach a point where some small adjustments are
+MkDocs is a great starting point for making it look beautiful. However, as you
+write your documentation, you may reach a point where small adjustments are
 necessary to preserve your brand's style.
 
 ## Adding assets
 
 [MkDocs][1] provides several ways to customize a theme. In order to make a few
-tweaks to an existing theme, you can just add your stylesheets and JavaScript
+tweaks to Material for MkDocs, you can just add your stylesheets and JavaScript
 files to the `docs` directory.
 
   [1]: https://www.mkdocs.org
 
-### Additional stylesheets
+### Additional CSS
 
 If you want to tweak some colors or change the spacing of certain elements,
 you can do this in a separate stylesheet. The easiest way is by creating a
 new stylesheet file in the `docs` directory:
 
-```
-mkdir docs/stylesheets
-touch docs/stylesheets/extra.css
+``` sh
+.
+├─ docs/
+│  └─ stylesheets/
+│     └─ extra.css
+└─ mkdocs.yml
 ```
 
 Then, add the following line to `mkdocs.yml`:
@@ -46,9 +49,12 @@ The same is true for additional JavaScript. If you want to integrate another
 syntax highlighter or add some custom logic to your theme, create a new
 JavaScript file in the `docs` directory:
 
-```
-mkdir docs/javascripts
-touch docs/javascripts/extra.js
+``` sh
+.
+├─ docs/
+│  └─ javascripts/
+│     └─ extra.js
+└─ mkdocs.yml
 ```
 
 Then, add the following line to `mkdocs.yml`:
@@ -64,16 +70,17 @@ Further assistance can be found in the [MkDocs documentation][3].
 
 ## Extending the theme
 
-If you want to alter the HTML source (e.g. add or remove some part), you can
+If you want to alter the HTML source (e.g. add or remove some parts), you can
 extend the theme. MkDocs supports [theme extension][4], an easy way to override
-parts of a theme without forking and changing the main theme.
+parts of Material for MkDocs without forking from git. This ensures that you
+can update to the latest version more easily.
 
   [4]: https://www.mkdocs.org/user-guide/styling-your-docs/#using-the-theme-custom_dir
 
 ### Setup and theme structure
 
-Reference the original theme as usual in `mkdocs.yml`, and create a new folder
-for `overrides` which you reference using `custom_dir`:
+Enable Material for MkDocs as usual in `mkdocs.yml`, and create a new folder
+for `overrides` which you then reference using the `custom_dir` key:
 
 ``` yaml
 theme:
@@ -105,10 +112,9 @@ The directory layout of the theme is as follows:
 │  ├─ integrations/                    # Third-party integrations
 │  │  ├─ analytics.html                # - Google Analytics
 │  │  └─ disqus.html                   # - Disqus
-│  ├─ language/                        # Localized languages
+│  ├─ languages/                       # Localized languages
 │  ├─ footer.html                      # Footer bar
 │  ├─ header.html                      # Header bar
-│  ├─ hero.html                        # Hero teaser
 │  ├─ language.html                    # Localized labels
 │  ├─ logo.html                        # Logo in header and sidebar
 │  ├─ nav.html                         # Main navigation
@@ -130,17 +136,37 @@ The directory layout of the theme is as follows:
 
 ### Overriding partials
 
-In order to override the footer, we can replace the `footer.html` partial with
-our own partial. To do this, create the file `partials/footer.html` in the
-`overrides` directory. MkDocs will now use the new partial when rendering the
-theme. This can be done with any file.
+In order to override a partial, we can replace it with a file of the same name
+and location in the `overrides` directory. For example, to replace the original
+`footer.html`, create a `footer.html` file in the `overrides/partials`
+directory:
+
+``` sh
+.
+├─ overrides/
+│  └─ partials/
+│     └─ footer.html
+└─ mkdocs.yml
+```
+
+MkDocs will now use the new partial when rendering the theme. This can be done
+with any file.
 
 ### Overriding blocks
 
-Besides overriding partials, it's also possible to override (and extend) so
-called _blocks_, which are defined inside the templates and wrap specific
-features. To override a block, create a `main.html` inside the `overrides`
-directory and define the block, e.g.:
+Besides overriding partials, it's also possible to override (and extend)
+_template blocks_, which are defined inside the templates and wrap specific
+features. To override a block, create a `main.html` file inside the `overrides`
+directory:
+
+``` sh
+.
+├─ overrides/
+│  └─ main.html
+└─ mkdocs.yml
+```
+
+Then, e.g. to override the site title, add the following line to `main.html`:
 
 ``` html
 {% extends "base.html" %}
@@ -152,46 +178,76 @@ directory and define the block, e.g.:
 
 Material for MkDocs provides the following template blocks:
 
-| Block name   | Wrapped contents                                |
-| ------------ | ----------------------------------------------- |
-| `analytics`  | Wraps the Google Analytics integration          |
-| `announce`   | Wraps the announcement bar                      |
-| `config`     | Wraps the JavaScript application config         |
-| `content`    | Wraps the main content                          |
-| `disqus`     | Wraps the Disqus integration                    |
-| `extrahead`  | Empty block to add custom meta tags             |
-| `fonts`      | Wraps the font definitions                      |
-| `footer`     | Wraps the footer with navigation and copyright  |
-| `header`     | Wraps the fixed header bar                      |
-| `hero`       | Wraps the hero teaser (if available)            |
-| `htmltitle`  | Wraps the `<title>` tag                         |
-| `libs`       | Wraps the JavaScript libraries (header)         |
-| `scripts`    | Wraps the JavaScript application (footer)       |
-| `source`     | Wraps the linked source files                   |
-| `site_meta`  | Wraps the meta tags in the document head        |
-| `site_nav`   | Wraps the site navigation and table of contents |
-| `styles`     | Wraps the stylesheets (also extra sources)      |
-| `tabs`       | Wraps the tabs navigation (if available)        |
+| Block name        | Purpose                                         |
+|:------------------|:------------------------------------------------|
+| `analytics`       | Wraps the Google Analytics integration          |
+| `announce`        | Wraps the announcement bar                      |
+| `config`          | Wraps the JavaScript application config         |
+| `content`         | Wraps the main content                          |
+| `disqus`          | Wraps the Disqus integration                    |
+| `extrahead`       | Empty block to add custom meta tags             |
+| `fonts`           | Wraps the font definitions                      |
+| `footer`          | Wraps the footer with navigation and copyright  |
+| `header`          | Wraps the fixed header bar                      |
+| `hero`            | Wraps the hero teaser (if available)            |
+| `htmltitle`       | Wraps the `<title>` tag                         |
+| `libs`            | Wraps the JavaScript libraries (header)         |
+| `outdated`        | Wraps the version warning                       |
+| `scripts`         | Wraps the JavaScript application (footer)       |
+| `source`          | Wraps the linked source files                   |
+| `site_meta`       | Wraps the meta tags in the document head        |
+| `site_nav`        | Wraps the site navigation and table of contents |
+| `styles`          | Wraps the stylesheets (also extra sources)      |
+| `tabs`            | Wraps the tabs navigation (if available)        |
 
 For more on this topic refer to the [MkDocs documentation][5].
 
-  [5]: https://www.mkdocs.org/user-guide/styling-your-docs/#overriding-template-blocks
+[5]: https://www.mkdocs.org/user-guide/styling-your-docs/#overriding-template-blocks
+
+#### Additional variables
+
+Besides template blocks, Material for MkDocs provides extra variables for parts
+that cannot be overridden with template blocks (due to technical limitations of
+the template engine). If you want to add further information after the _Made
+with Material for MkDocs_ hint in the footer, add the following line to
+`main.html`:
+
+``` html
+{% extends "base.html" %}
+
+{% set extracopyright %}
+  <!-- Add your additional information here -->
+{% endset %}
+```
+
+Material for MkDocs provides the following additional variables:
+
+| Block name        | Purpose                                         |
+|:------------------|:------------------------------------------------|
+| `extracopyright`  | Adds custom copyright information               |
 
 ## Theme development
 
-Material for MkDocs uses [Webpack][6] as a build tool to leverage modern web
-technologies like [TypeScript][7] and [SASS][8]. If you want to make more
-fundamental changes, it may be necessary to make the adjustments directly in
-the source of the theme and recompile it.
+Material for MkDocs is built on top of [TypeScript][6], [RxJS][7] and [SASS][8],
+and uses a lean, custom build process to put everything together.[^1] If you
+want to make more fundamental changes, it may be necessary to make the
+adjustments directly in the source of the theme and recompile it.
 
-  [6]: https://webpack.js.org/
-  [7]: https://www.typescriptlang.org/
+  [^1]:
+    Prior to version 7.0, the build was based on Webpack. This led to broken
+    builds due to frequent incompatibilities with loaders and plugins, so we
+    decided to swap Webpack for a leaner custom solution which is now based on
+    [RxJS][7] as the application itself. This enabled us to remove more than
+    500 dependencies (~30% less).
+
+  [6]: https://www.typescriptlang.org/
+  [7]: https://github.com/ReactiveX/rxjs
   [8]: https://sass-lang.com
 
 ### Environment setup
 
 In order to start development on Material for MkDocs, a [Node.js][9] version of
-at least 12 is required. First, clone the repository:
+at least 14 is required. First, clone the repository:
 
 ```
 git clone https://github.com/squidfunk/mkdocs-material
@@ -203,6 +259,7 @@ Next, all dependencies need to be installed, which is done with:
 cd mkdocs-material
 pip install -r requirements.txt
 pip install mkdocs-minify-plugin
+pip install mkdocs-redirects
 npm install
 ```
 
@@ -210,7 +267,7 @@ npm install
 
 ### Development mode
 
-Start the Webpack watchdog with:
+Start the watcher with:
 
 ```
 npm start

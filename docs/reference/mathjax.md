@@ -34,7 +34,7 @@ Besides enabling the extension in `mkdocs.yml`, a MathJax configuration and
 the JavaScript runtime need to be included, which can be done with [additional 
 JavaScript][8]:
 
-=== "docs/javascript/config.js"
+=== "docs/javascripts/config.js"
 
     ``` js
     window.MathJax = {
@@ -49,6 +49,10 @@ JavaScript][8]:
         processHtmlClass: "arithmatex"
       }
     };
+
+    document$.subscribe(() => {
+      MathJax.typesetPromise()
+    })
     ```
 
 === "mkdocs.yml"
@@ -67,7 +71,7 @@ information._
 !!! tip "Using MathJax with [instant loading][9]"
 
     There's no additional effort necessary to integrate _MathJax 3_ with
-    [instant loading][7] – it's expected to work straight away. However, a
+    [instant loading][9] – it's expected to work straight away. However, a
     previous version of this document explained how to integrate Material for
     MkDocs with _MathJax 2_, which doesn't exhibit this behavior. It's therefore
     highly recommended to switch to _MathJax 3_.

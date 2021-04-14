@@ -1,5 +1,5 @@
 ////
-/// Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+/// Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a
 /// copy of this software and associated documentation files (the "Software"),
@@ -78,28 +78,14 @@
   // Typeset color shades
   --md-typeset-a-color:                hsla(#{hex2hsl($clr-indigo-500)}, 1);
 
-  // Add a border if there are no tabs
-  .md-hero--expand {
-    border-bottom: px2rem(1px) solid hsla(0, 0%, 0%, 0.07);
-  }
-
-  // [tablet -]: Set bottom border for hero
-  @include break-to-device(tablet) {
-
-    // Hero teaser
-    .md-hero {
-      border-bottom: px2rem(1px) solid hsla(0, 0%, 0%, 0.07);
-    }
-  }
-
-  // [tablet portrait +]: Change color of search input
+  // [tablet portrait +]: Header-embedded search
   @include break-from-device(tablet landscape) {
 
     // Search input
     .md-search__input {
       background-color: hsla(0, 0%, 0%, 0.07);
 
-      // Icon color
+      // Search icon color
       + .md-search__icon {
         color: hsla(0, 0%, 0%, 0.87);
       }
@@ -109,17 +95,17 @@
         color: hsla(0, 0%, 0%, 0.54);
       }
 
-      // Hovered search field
+      // Search input on hover
       &:hover {
         background-color: hsla(0, 0%, 0%, 0.32);
       }
     }
   }
 
-  // [screen +]: Set bottom border for tabs
+  // [screen +]: Add bottom border for tabs
   @include break-from-device(screen) {
 
-    // Tabs with outline
+    // Navigation tabs
     .md-tabs {
       border-bottom: px2rem(1px) solid hsla(0, 0%, 0%, 0.07);
     }
@@ -141,20 +127,15 @@
   // Text color shades
   --md-typeset-a-color:                hsla(#{hex2hsl($clr-indigo-500)}, 1);
 
-  // Application header (stays always on top)
+  // Header
   .md-header {
-    background-color: hsla(0, 0%, 0%, 1);
-  }
-
-  // Hero teaser
-  .md-hero {
     background-color: hsla(0, 0%, 0%, 1);
   }
 
   // [tablet portrait -]: Layered navigation
   @include break-to-device(tablet portrait) {
 
-    // Repository containing source
+    // Repository information container
     .md-nav__source {
       background-color: hsla(0, 0%, 0%, 0.87);
     }
@@ -167,7 +148,7 @@
     .md-search__input {
       background-color: hsla(0, 0%, 100%, 0.12);
 
-      // Hovered search field
+      // Search form on hover
       &:hover {
         background-color: hsla(0, 0%, 100%, 0.3);
       }
@@ -186,7 +167,7 @@
   // [screen +]: Set background color for tabs
   @include break-from-device(screen) {
 
-    // Tabs with outline
+    // Navigation tabs
     .md-tabs {
       background-color: hsla(0, 0%, 0%, 1);
     }

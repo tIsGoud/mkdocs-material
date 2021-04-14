@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+ * Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  */
 
-import * as escapeHTML from "escape-html"
+import escapeHTML from "escape-html"
 
 import { SearchIndexDocument } from "../_"
 
@@ -29,27 +29,13 @@ import { SearchIndexDocument } from "../_"
  * ------------------------------------------------------------------------- */
 
 /**
- * A top-level article
+ * Search document
  */
-export interface ArticleDocument extends SearchIndexDocument {
-  linked: boolean                      /* Whether the section was linked */
-}
-
-/**
- * A section of an article
- */
-export interface SectionDocument extends SearchIndexDocument {
-  parent: ArticleDocument              /* Parent article */
+export interface SearchDocument extends SearchIndexDocument {
+  parent?: SearchIndexDocument         /* Parent article */
 }
 
 /* ------------------------------------------------------------------------- */
-
-/**
- * Search document
- */
-export type SearchDocument =
-  | ArticleDocument
-  | SectionDocument
 
 /**
  * Search document mapping
@@ -65,12 +51,13 @@ export type SearchDocumentMap = Map<string, SearchDocument>
  *
  * @param docs - Search index documents
  *
- * @return Search document map
+ * @returns Search document map
  */
 export function setupSearchDocumentMap(
   docs: SearchIndexDocument[]
 ): SearchDocumentMap {
   const documents = new Map<string, SearchDocument>()
+  const parents   = new Set<SearchDocument>()
   for (const doc of docs) {
     const [path, hash] = doc.location.split("#")
 
@@ -85,13 +72,15 @@ export function setupSearchDocumentMap(
 
     /* Handle section */
     if (hash) {
-      const parent = documents.get(path) as ArticleDocument
+      const parent = documents.get(path)!
 
       /* Ignore first section, override article */
-      if (!parent.linked) {
-        parent.title  = doc.title
-        parent.text   = text
-        parent.linked = true
+      if (!parents.has(parent)) {
+        parent.title = doc.title
+        parent.text  = text
+
+        /* Remember that we processed the article */
+        parents.add(parent)
 
       /* Add subsequent section */
       } else {
@@ -108,8 +97,7 @@ export function setupSearchDocumentMap(
       documents.set(location, {
         location,
         title,
-        text,
-        linked: false
+        text
       })
     }
   }

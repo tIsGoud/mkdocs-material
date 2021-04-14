@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+ * Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -20,27 +20,8 @@
  * IN THE SOFTWARE.
  */
 
-import { h, translate } from "utilities"
-
-/* ----------------------------------------------------------------------------
- * Data
- * ------------------------------------------------------------------------- */
-
-/**
- * CSS classes
- */
-const css = {
-  container: "md-clipboard md-icon"
-}
-
-/* ------------------------------------------------------------------------- */
-
-/**
- * Path of `file-search-outline` icon
- */
-const path =
-  "M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 " +
-  "21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"
+import { translation } from "~/_"
+import { h } from "~/utilities"
 
 /* ----------------------------------------------------------------------------
  * Functions
@@ -51,20 +32,14 @@ const path =
  *
  * @param id - Unique identifier
  *
- * @return Element
+ * @returns Element
  */
-export function renderClipboardButton(
-  id: string
-) {
+export function renderClipboardButton(id: string): HTMLElement {
   return (
     <button
-      class={css.container}
-      title={translate("clipboard.copy")}
+      class="md-clipboard md-icon"
+      title={translation("clipboard.copy")}
       data-clipboard-target={`#${id} > code`}
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d={path}></path>
-      </svg>
-    </button>
+    ></button>
   )
 }

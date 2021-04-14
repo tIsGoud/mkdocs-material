@@ -59,16 +59,16 @@ theme:
 
 Some popular choices:
 
-* :fontawesome-brands-git: – `fontawesome/brands/git`
-* :fontawesome-brands-git-alt: – `fontawesome/brands/git-alt`
-* :fontawesome-brands-git-square: – `fontawesome/brands/git-square`
-* :fontawesome-brands-github: – `fontawesome/brands/github`
-* :fontawesome-brands-github-alt: – `fontawesome/brands/github-alt`
-* :fontawesome-brands-github-square: – `fontawesome/brands/github-square`
-* :fontawesome-brands-gitlab: – `fontawesome/brands/gitlab`
-* :fontawesome-brands-gitkraken: – `fontawesome/brands/gitkraken`
-* :fontawesome-brands-bitbucket: – `fontawesome/brands/bitbucket`
-* :fontawesome-solid-trash: – `fontawesome/solid/trash`
+- :fontawesome-brands-git: – `fontawesome/brands/git`
+- :fontawesome-brands-git-alt: – `fontawesome/brands/git-alt`
+- :fontawesome-brands-git-square: – `fontawesome/brands/git-square`
+- :fontawesome-brands-github: – `fontawesome/brands/github`
+- :fontawesome-brands-github-alt: – `fontawesome/brands/github-alt`
+- :fontawesome-brands-github-square: – `fontawesome/brands/github-square`
+- :fontawesome-brands-gitlab: – `fontawesome/brands/gitlab`
+- :fontawesome-brands-gitkraken: – `fontawesome/brands/gitkraken`
+- :fontawesome-brands-bitbucket: – `fontawesome/brands/bitbucket`
+- :fontawesome-solid-trash: – `fontawesome/solid/trash`
 
   [4]: https://github.com/squidfunk/mkdocs-material/tree/master/material/.icons
 
@@ -93,7 +93,7 @@ behavior can be changed by setting [`edit_uri`][9] in `mkdocs.yml`:
     edit_uri: ""
     ```
 
-  [5]: https://github.com/squidfunk/mkdocs-material/blob/master/src/base.html#L299-L308
+  [5]: https://github.com/squidfunk/mkdocs-material/blob/master/src/base.html
   [6]: https://github.com/
   [7]: https://about.gitlab.com/
   [8]: https://bitbucket.org/
@@ -104,7 +104,7 @@ behavior can be changed by setting [`edit_uri`][9] in `mkdocs.yml`:
 [:octicons-file-code-24: Source][10] ·
 [:octicons-cpu-24: Plugin][11]
 
-The [git-revision-date][11] plugin adds support for displaying the date a 
+The [git-revision-date][10] plugin adds support for displaying the date a
 document was _last updated_ at the bottom of each page. It can be installed
 with `pip`:
 
@@ -121,7 +121,7 @@ plugins:
 
 The following options are supported:
 
-`enabled_if_env`{: #enabled_if_env }
+`enabled_if_env`{ #enabled_if_env }
 
 :   :octicons-milestone-24: Default: _none_ – This option defines whether the
     date is actually extracted from git, which makes it possible to disable
@@ -134,8 +134,8 @@ The following options are supported:
     ```
 
 _Material for MkDocs doesn't provide official support for the other options of
-this plugin, so they may be supported but can also yield weird results. Use
-them at your own risk._
+this plugin, so they may be supported but might yield unexpected results.
+Use them at your own risk._
 
   [10]: https://github.com/squidfunk/mkdocs-material/blob/master/src/partials/source-date.html
   [11]: https://github.com/zhaoterryy/mkdocs-git-revision-date-plugin
@@ -145,7 +145,7 @@ them at your own risk._
 [:octicons-file-code-24: Source][10] ·
 [:octicons-cpu-24: Plugin][12]
 
-Similarly, the [git-revision-date-localized][12] plugin adds support for adding 
+Similarly, the [git-revision-date-localized][12] plugin adds support for adding
 a localized _last updated_ date at the bottom of each page. It can be installed
 with `pip`:
 
@@ -162,7 +162,7 @@ plugins:
 
 The following options are supported:
 
-`type`{: #type }
+`type`{ #type }
 
 :   :octicons-milestone-24: Default: `date` – This option allows to change the
     format of the date to be displayed. Valid values are `date`, `datetime`,
@@ -174,7 +174,7 @@ The following options are supported:
           type: date
     ```
 
-`fallback_to_build_date`{: #fallback_to_build_date }
+`fallback_to_build_date`{ #fallback_to_build_date }
 
 :   :octicons-milestone-24: Default: `false` – This option specifies whether
     the time when `mkdocs build` was executed should be used as a fallback when
@@ -187,7 +187,7 @@ The following options are supported:
     ```
 
 _Material for MkDocs doesn't provide official support for the other options of
-this plugin, so they may be supported but can also yield weird results. Use
-them at your own risk._
+this plugin, so they may be supported but might yield unexpected results.
+Use them at your own risk._
 
   [12]: https://github.com/timvink/mkdocs-git-revision-date-localized-plugin

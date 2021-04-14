@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+ * Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,15 +21,19 @@
  */
 
 import {
-  ArticleDocument,
+  SearchDocument,
   SearchDocumentMap,
-  SectionDocument,
   setupSearchDocumentMap
 } from "../document"
 import {
   SearchHighlightFactoryFn,
   setupSearchHighlighter
 } from "../highlighter"
+import {
+  SearchQueryTerms,
+  getSearchQueryTerms,
+  parseSearchQuery
+} from "../query"
 
 /* ----------------------------------------------------------------------------
  * Types
@@ -78,8 +82,18 @@ export type SearchIndexPipeline = SearchIndexPipelineFn[]
 export interface SearchIndex {
   config: SearchIndexConfig            /* Search index configuration */
   docs: SearchIndexDocument[]          /* Search index documents */
-  index?: object | string              /* Prebuilt or serialized index */
+  index?: object                       /* Prebuilt index */
   pipeline?: SearchIndexPipeline       /* Search index pipeline */
+}
+
+/* ------------------------------------------------------------------------- */
+
+/**
+ * Search metadata
+ */
+export interface SearchMetadata {
+  score: number                        /* Score (relevance) */
+  terms: SearchQueryTerms              /* Search query terms */
 }
 
 /* ------------------------------------------------------------------------- */
@@ -87,10 +101,7 @@ export interface SearchIndex {
 /**
  * Search result
  */
-export interface SearchResult {
-  article: ArticleDocument             /* Article document */
-  sections: SectionDocument[]          /* Section documents */
-}
+export type SearchResult = Array<SearchDocument & SearchMetadata>
 
 /* ----------------------------------------------------------------------------
  * Functions
@@ -102,7 +113,7 @@ export interface SearchResult {
  * @param a - 1st list of strings
  * @param b - 2nd list of strings
  *
- * @return Difference
+ * @returns Difference
  */
 function difference(a: string[], b: string[]): string[] {
   const [x, y] = [new Set(a), new Set(b)]
@@ -116,10 +127,7 @@ function difference(a: string[], b: string[]): string[] {
  * ------------------------------------------------------------------------- */
 
 /**
- * Search
- *
- * Note that `lunr` is injected via Webpack, as it will otherwise also be
- * bundled in the application bundle.
+ * Search index
  */
 export class Search {
 
@@ -128,8 +136,8 @@ export class Search {
    *
    * A mapping of URLs (including hash fragments) to the actual articles and
    * sections of the documentation. The search document mapping must be created
-   * regardless of whether the index was prebuilt or not, as `lunr` itself will
-   * only store the actual index.
+   * regardless of whether the index was prebuilt or not, as Lunr.js itself
+   * only stores the actual index.
    */
   protected documents: SearchDocumentMap
 
@@ -139,7 +147,7 @@ export class Search {
   protected highlight: SearchHighlightFactoryFn
 
   /**
-   * The `lunr` search index
+   * The underlying Lunr.js search index
    */
   protected index: lunr.Index
 
@@ -157,9 +165,9 @@ export class Search {
 
     /* If no index was given, create it */
     if (typeof index === "undefined") {
-      this.index = lunr(function() {
+      this.index = lunr(function () {
 
-        /* Set up alternate search languages */
+        /* Set up multi-language support */
         if (config.lang.length === 1 && config.lang[0] !== "en") {
           this.use((lunr as any)[config.lang[0]])
         } else if (config.lang.length > 1) {
@@ -171,7 +179,7 @@ export class Search {
           "trimmer", "stopWordFilter", "stemmer"
         ], pipeline!)
 
-        /* Remove functions from the pipeline for every language */
+        /* Remove functions from the pipeline for registered languages */
         for (const lang of config.lang.map(language => (
           language === "en" ? lunr : (lunr as any)[language]
         ))) {
@@ -191,13 +199,9 @@ export class Search {
           this.add(doc)
       })
 
-    /* Prebuilt or serialized index */
+    /* Handle prebuilt index */
     } else {
-      this.index = lunr.Index.load(
-        typeof index === "string"
-          ? JSON.parse(index)
-          : index
-      )
+      this.index = lunr.Index.load(index)
     }
   }
 
@@ -213,45 +217,70 @@ export class Search {
    * page. For this reason, section results are grouped within their respective
    * articles which are the top-level results that are returned.
    *
-   * @param value - Query value
+   * @param query - Query value
    *
-   * @return Search results
+   * @returns Search results
    */
-  public query(value: string): SearchResult[] {
-    if (value) {
+  public search(query: string): SearchResult[] {
+    if (query) {
       try {
+        const highlight = this.highlight(query)
 
-        /* Group sections by containing article */
-        const groups = this.index.search(value)
-          .reduce((results, result) => {
-            const document = this.documents.get(result.ref)
+        /* Parse query to extract clauses for analysis */
+        const clauses = parseSearchQuery(query)
+          .filter(clause => (
+            clause.presence !== lunr.Query.presence.PROHIBITED
+          ))
+
+        /* Perform search and post-process results */
+        const groups = this.index.search(`${query}*`)
+
+          /* Apply post-query boosts based on title and search query terms */
+          .reduce<SearchResult>((results, { ref, score, matchData }) => {
+            const document = this.documents.get(ref)
             if (typeof document !== "undefined") {
-              if ("parent" in document) {
-                const ref = document.parent.location
-                results.set(ref, [...results.get(ref) || [], result])
-              } else {
-                const ref = document.location
-                results.set(ref, results.get(ref) || [])
-              }
+              const { location, title, text, parent } = document
+
+              /* Compute and analyze search query terms */
+              const terms = getSearchQueryTerms(
+                clauses,
+                Object.keys(matchData.metadata)
+              )
+
+              /* Highlight title and text and apply post-query boosts */
+              const boost = +!parent + +Object.values(terms).every(t => t)
+              results.push({
+                location,
+                title: highlight(title),
+                text: highlight(text),
+                score: score * (1 + boost),
+                terms
+              })
             }
             return results
-          }, new Map<string, lunr.Index.Result[]>())
+          }, [])
 
-        /* Create highlighter for query */
-        const fn = this.highlight(value)
+          /* Sort search results again after applying boosts */
+          .sort((a, b) => b.score - a.score)
 
-        /* Map groups to search documents */
-        return [...groups].map(([ref, sections]) => ({
-          article: fn(this.documents.get(ref) as ArticleDocument),
-          sections: sections.map(section => {
-            return fn(this.documents.get(section.ref) as SectionDocument)
-          })
-        }))
+          /* Group search results by page */
+          .reduce((results, result) => {
+            const document = this.documents.get(result.location)
+            if (typeof document !== "undefined") {
+              const ref = "parent" in document
+                ? document.parent!.location
+                : document.location
+              results.set(ref, [...results.get(ref) || [], result])
+            }
+            return results
+          }, new Map<string, SearchResult>())
+
+        /* Expand grouped search results */
+        return [...groups.values()]
 
       /* Log errors to console (for now) */
-      } catch (err) {
-        // tslint:disable-next-line no-console
-        console.warn(`Invalid query: ${value} – see https://bit.ly/2s3ChXG`)
+      } catch {
+        console.warn(`Invalid query: ${query} – see https://bit.ly/2s3ChXG`)
       }
     }
 

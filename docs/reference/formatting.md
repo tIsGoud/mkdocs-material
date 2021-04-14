@@ -28,7 +28,7 @@ markdown_extensions:
 
 The following options are supported:
 
-`mode`{: #mode }
+`mode`{ #mode }
 
 :   :octicons-milestone-24: Default: `view` – This option defines how the markup 
     should be parsed, i.e. whether to just `view` all suggest changes, or
@@ -59,7 +59,7 @@ The following options are supported:
         ```
 
   [2]: https://github.com/squidfunk/mkdocs-material/blob/master/src/assets/stylesheets/main/extensions/pymdownx/_critic.scss
-  [3]: https://facelessuser.github.io/pymdown-extensions/critic/
+  [3]: https://facelessuser.github.io/pymdown-extensions/extensions/critic/
   [4]: https://facelessuser.github.io/pymdown-extensions/
 
 ### BetterEm
@@ -89,9 +89,9 @@ markdown_extensions:
   - pymdownx.tilde
 ```
 
-  [6]: https://facelessuser.github.io/pymdown-extensions/caret/
-  [7]: https://facelessuser.github.io/pymdown-extensions/mark/
-  [8]: https://facelessuser.github.io/pymdown-extensions/tilde/
+  [6]: https://facelessuser.github.io/pymdown-extensions/extensions/caret/
+  [7]: https://facelessuser.github.io/pymdown-extensions/extensions/mark/
+  [8]: https://facelessuser.github.io/pymdown-extensions/extensions/tilde/
 
 ### SmartSymbols
 
@@ -155,16 +155,16 @@ highlighted with a nicer syntax than using the corresponding `mark`, `ins` and
 _Example_:
 
 ``` markdown 
-* ==This was marked==
-* ^^This was inserted^^
-* ~~This was deleted~~
+- ==This was marked==
+- ^^This was inserted^^
+- ~~This was deleted~~
 ```
 
 _Result_:
 
-* ==This was marked==
-* ^^This was inserted^^
-* ~~This was deleted~~
+- ==This was marked==
+- ^^This was inserted^^
+- ~~This was deleted~~
 
   [11]: #caret-mark-tilde
 
@@ -177,13 +177,13 @@ HTML tags:
 _Example_:
 
 ``` markdown 
-* H~2~0
-* A^T^A
+- H~2~0
+- A^T^A
 ```
 
 _Result_:
 
-* H~2~0
-* A^T^A
+- H~2~0
+- A^T^A
 
   [11]: #caret-mark-tilde

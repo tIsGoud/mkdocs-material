@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+ * Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,7 +21,7 @@
  */
 
 import { Observable, fromEvent, merge } from "rxjs"
-import { map, shareReplay, startWith } from "rxjs/operators"
+import { map, startWith } from "rxjs/operators"
 
 import { getActiveElement } from "../_"
 
@@ -36,7 +36,7 @@ import { getActiveElement } from "../_"
  * @param value - Whether the element should be focused
  */
 export function setElementFocus(
-el: HTMLElement, value: boolean = true
+  el: HTMLElement, value = true
 ): void {
   if (value)
     el.focus()
@@ -51,7 +51,7 @@ el: HTMLElement, value: boolean = true
  *
  * @param el - Element
  *
- * @return Element focus observable
+ * @returns Element focus observable
  */
 export function watchElementFocus(
   el: HTMLElement
@@ -62,7 +62,6 @@ export function watchElementFocus(
   )
     .pipe(
       map(({ type }) => type === "focus"),
-      startWith(el === getActiveElement()),
-      shareReplay(1)
+      startWith(el === getActiveElement())
     )
 }

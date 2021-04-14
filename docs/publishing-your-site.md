@@ -23,7 +23,7 @@ documentation. At the root of your repository, create a new GitHub Actions
 workflow, e.g. `.github/workflows/ci.yml`, and copy and paste the following
 contents:
 
-=== ".github/workflows/ci.yml"
+=== "Material for MkDocs"
 
     ``` yaml
     name: ci
@@ -31,6 +31,7 @@ contents:
       push:
         branches:
           - master
+          - main
     jobs:
       deploy:
         runs-on: ubuntu-latest
@@ -43,13 +44,44 @@ contents:
           - run: mkdocs gh-deploy --force
     ```
 
-Now, when a new commit is pushed to `master`, the static site is automatically
-built and deployed. Commit and push the file to your repository to see the
-workflow in action.
+=== "Insiders"
+
+    ``` yaml
+    name: ci
+    on:
+      push:
+        branches:
+          - master
+          - main
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        if: github.event.repository.fork == false
+        steps:
+          - uses: actions/checkout@v2
+          - uses: actions/setup-python@v2
+            with:
+              python-version: 3.x
+          - run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
+          - run: mkdocs gh-deploy --force
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    ```
+
+Now, when a new commit is pushed to either the `master` or `main` branches,
+the static site is automatically built and deployed. Push your changes to see
+the workflow in action.
 
 Your documentation should shortly appear at `<username>.github.io/<repository>`.
 
+_Remember to set the_ `GH_TOKEN` _environment variable to the value of your
+[personal access token][3] when deploying [Insiders][4], which can be done
+using [secrets][5]._
+
   [2]: https://github.com/features/actions
+  [3]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+  [4]: insiders/index.md
+  [5]: https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
 
 ### with MkDocs
 
@@ -62,21 +94,37 @@ mkdocs gh-deploy --force
 
 ## GitLab Pages
 
-If you're hosting your code on GitLab, deploying to [GitLab Pages][3] can be
-done by using the [GitLab CI][4] task runner. At the root of your repository,
+If you're hosting your code on GitLab, deploying to [GitLab Pages][6] can be
+done by using the [GitLab CI][7] task runner. At the root of your repository,
 create a task definition named `.gitlab-ci.yml` and copy and paste the
 following contents:
 
-=== ".gitlab-ci.yml"
+=== "Material for MkDocs"
 
     ``` yaml
     image: python:latest
-    deploy:
+    pages:
       stage: deploy
       only:
         - master
       script:
         - pip install mkdocs-material
+        - mkdocs build --site-dir public
+      artifacts:
+        paths:
+          - public
+    ```
+
+=== "Insiders"
+
+    ``` yaml
+    image: python:latest
+    pages:
+      stage: deploy
+      only:
+        - master
+      script:
+        - pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
         - mkdocs build --site-dir public
       artifacts:
         paths:
@@ -89,6 +137,10 @@ workflow in action.
 
 Your documentation should shortly appear at `<username>.gitlab.io/<repository>`.
 
-  [3]: https://gitlab.com/pages
-  [4]: https://docs.gitlab.com/ee/ci/
+_Remember to set the_ `GH_TOKEN` _environment variable to the value of your
+[personal access token][3] when deploying [Insiders][4], which can be done
+using [masked custom variables][8]._
 
+  [6]: https://gitlab.com/pages
+  [7]: https://docs.gitlab.com/ee/ci/
+  [8]: https://docs.gitlab.com/ee/ci/variables/#create-a-custom-variable-in-the-ui

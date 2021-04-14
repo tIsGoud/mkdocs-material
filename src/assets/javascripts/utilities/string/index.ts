@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+ * Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -20,59 +20,9 @@
  * IN THE SOFTWARE.
  */
 
-import { getElementOrThrow } from "browser"
-
-/* ----------------------------------------------------------------------------
- * Helper types
- * ------------------------------------------------------------------------- */
-
-/**
- * Translation keys
- */
-type TranslateKey =
-  | "clipboard.copy"                   /* Copy to clipboard */
-  | "clipboard.copied"                 /* Copied to clipboard */
-  | "search.config.lang"               /* Search language */
-  | "search.config.pipeline"           /* Search pipeline */
-  | "search.config.separator"          /* Search separator */
-  | "search.result.placeholder"        /* Type to start searching */
-  | "search.result.none"               /* No matching documents */
-  | "search.result.one"                /* 1 matching document */
-  | "search.result.other"              /* # matching documents */
-
-/* ----------------------------------------------------------------------------
- * Data
- * ------------------------------------------------------------------------- */
-
-/**
- * Translations
- */
-let lang: Record<string, string>
-
 /* ----------------------------------------------------------------------------
  * Functions
  * ------------------------------------------------------------------------- */
-
-/**
- * Translate the given key
- *
- * @param key - Key to be translated
- * @param value - Value to be replaced
- *
- * @return Translation
- */
-export function translate(key: TranslateKey, value?: string): string {
-  if (typeof lang === "undefined") {
-    const el = getElementOrThrow("#__lang")
-    lang = JSON.parse(el.textContent!)
-  }
-  if (typeof lang[key] === "undefined") {
-    throw new ReferenceError(`Invalid translation: ${key}`)
-  }
-  return typeof value !== "undefined"
-    ? lang[key].replace("#", value)
-    : lang[key]
-}
 
 /**
  * Truncate a string after the given number of characters
@@ -85,21 +35,21 @@ export function translate(key: TranslateKey, value?: string): string {
  * @param value - Value to be truncated
  * @param n - Number of characters
  *
- * @return Truncated value
+ * @returns Truncated value
  */
 export function truncate(value: string, n: number): string {
   let i = n
   if (value.length > i) {
-    while (value[i] !== " " && --i > 0); // tslint:disable-line
+    while (value[i] !== " " && --i > 0) { /* keep eating */ }
     return `${value.substring(0, i)}...`
   }
   return value
 }
 
 /**
- * Round a number for display with source facts
+ * Round a number for display with repository facts
  *
- * This is a reverse engineered version of GitHub's weird rounding algorithm
+ * This is a reverse-engineered version of GitHub's weird rounding algorithm
  * for stars, forks and all other numbers. While all numbers below `1,000` are
  * returned as-is, bigger numbers are converted to fixed numbers:
  *
@@ -110,7 +60,7 @@ export function truncate(value: string, n: number): string {
  *
  * @param value - Original value
  *
- * @return Rounded value
+ * @returns Rounded value
  */
 export function round(value: number): string {
   if (value > 999) {
@@ -128,13 +78,13 @@ export function round(value: number): string {
  *
  * @param value - Value to be hashed
  *
- * @return Hash as 32bit integer
+ * @returns Hash as 32bit integer
  */
 export function hash(value: string): number {
-    let h = 0
-    for (let i = 0, len = value.length; i < len; i++) {
-      h  = ((h << 5) - h) + value.charCodeAt(i)
-      h |= 0 // Convert to 32bit integer
-    }
-    return h
+  let h = 0
+  for (let i = 0, len = value.length; i < len; i++) {
+    h  = ((h << 5) - h) + value.charCodeAt(i)
+    h |= 0 // Convert to 32bit integer
   }
+  return h
+}

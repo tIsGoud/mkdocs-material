@@ -10,7 +10,7 @@ Material for MkDocs natively integrates with [Google Analytics][1], [other
 analytics services][2] can be used, too.
 
   [1]: https://developers.google.com/analytics
-  [2]: #using-other-analytics-services
+  [2]: #other-analytics-providers
 
 ## Configuration
 
@@ -68,7 +68,7 @@ which will emit the current `URL` to listen for navigation events and register
 a page view event with:
 
 ``` js
-app.location$.subscribe(function(url) {
+location$.subscribe(function(url) {
   /* Add custom page event tracking here */
 })
 ```

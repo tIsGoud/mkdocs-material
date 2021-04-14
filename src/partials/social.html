@@ -1,5 +1,5 @@
 <!--
-  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+  Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to
@@ -32,7 +32,7 @@
       <a
         href="{{ social.link }}"
         target="_blank" rel="noopener"
-        title="{{ title }}"
+        title="{{ title | e }}"
         class="md-footer-social__link"
       >
         {% include ".icons/" ~ social.icon ~ ".svg" %}
