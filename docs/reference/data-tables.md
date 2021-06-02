@@ -10,7 +10,7 @@ like [sortable tables][1] can be achieved with a third-party library and some
 [additional JavaScript][2].
 
   [1]: #sortable-tables
-  [2]: ../customization.md#additional-javascript 
+  [2]: ../customization.md#additional-javascript
 
 ## Configuration
 
