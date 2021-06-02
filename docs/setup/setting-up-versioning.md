@@ -78,8 +78,8 @@ you can [define the `outdated` block][9]:
 ``` html
 {% block outdated %}
   You're not viewing the latest version.
-  <a href="{{ config.site_url | url }}">
-    Click here to go to latest.
+  <a href="{{ '../' ~ base_url }}">
+    <strong>Click here to go to latest.</strong>
   </a>
 {% endblock %}
 ```
@@ -102,7 +102,7 @@ Make sure that this matches the [default version][11].
 
   [7]: ../insiders/index.md
   [8]: ../customization.md#extending-the-theme
-  [9]: ../customization.md#overriding-blocks
+  [9]: ../customization.md#overriding-blocks-recommended
   [10]: ../assets/screenshots/version-warning.png
   [11]: #setting-a-default-version
 

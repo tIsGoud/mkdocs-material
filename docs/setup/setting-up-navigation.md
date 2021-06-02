@@ -377,7 +377,9 @@ The content section will now always stretch to the right side, resulting in
 more space for your content. This feature flag can be combined with all other
 feature flags, e.g. [tabs][1] and [sections][2]. 
 
-### Hide the sidebars
+## Usage
+
+### Hiding the sidebars
 
 [:octicons-file-code-24: Source][28] ·
 :octicons-note-24: Metadata
@@ -386,13 +388,14 @@ Sometimes it's desirable to hide the navigation and/or table of contents
 sidebar, especially when there's a single navigation item. This can be done for
 any page using the [Metadata][29] extension:
 
-``` yaml
+``` bash
 ---
 hide:
-  - navigation # Hide navigation
-  - toc        # Hide table of contents
+  - navigation
+  - toc
 ---
 
+# Document title
 ...
 ```
 

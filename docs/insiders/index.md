@@ -12,7 +12,7 @@ to [get access to Insiders][2].
 
 <figure class="mdx-video" markdown="1">
   <div class="mdx-video__inner">
-    <iframe src="https://streamable.com/e/7zpb0k" allowfullscreen></iframe>
+    <iframe src="https://streamable.com/e/q64w50" allowfullscreen></iframe>
   </div>
   <figcaption markdown="1">
 
@@ -28,8 +28,8 @@ A demo is worth a thousand words — check it out at
 
 ## How sponsorship works
 
-New features first land in Insiders, which means that _sponsors will have access
-immediately_. Every feature is tied to a funding goal in monthly subscriptions.
+New features first land in Insiders, so _eligible sponsors have immediate
+access_. Every feature is tied to a funding goal in monthly subscriptions.
 When a funding goal is hit, the features that are tied to it are merged back
 into Material for MkDocs and released for general availability. Bugfixes are
 always released simultaneously in both editions.[^1]
@@ -55,18 +55,25 @@ currently only available to sponsors._
 
 ## How to become a sponsor
 
-You can become a sponsor using your individual or organization's GitHub account.
-Just visit __[squidfunk's sponsor profile][5]__, pick any tier __from
-$10/month__, and complete the checkout. Then, after a few hours, @squidfunk will
-add you as a collaborator to the super-secret private GitHub repositority
+You can become an eligible sponsor with your individual or organization's GitHub
+account. Visit __[squidfunk's sponsor profile][5]__, pick any tier __from
+$10/month__[^2], and complete the checkout. Then, after a few hours, @squidfunk
+will add you as a collaborator to the super-secret private GitHub repositority
 containing the Insiders edition, which contains all [brand new and exclusive
 features][4].
 
 __Important__: If you're sponsoring @squidfunk through a GitHub organization,
 please send a short email to sponsors@squidfunk.com with the name of your
-organization and the account that should be added as a collaborator.[^2]
+organization and the account that should be added as a collaborator.[^3]
+
+You can cancel your sponsorship anytime.[^4]
 
   [^2]:
+    Note that $10/month is the minimum amount to become eligible for Insiders.
+    If you sponsor with a lower amount, it's still very much apprecaited, but
+    you won't be granted access to Insiders. Custom amounts of $10+ are also eligible.
+
+  [^3]:
     It's currently not possible to grant access to each member of an
     organization, as GitHub only allows for adding users. Thus, after
     sponsoring, please send an email to sponsors@squidfunk.com, stating which
@@ -79,16 +86,14 @@ organization and the account that should be added as a collaborator.[^2]
     private Insiders GitHub repository, and grant access to all members of the
     organizations.
 
-You can cancel your sponsorship anytime.[^3]
-
-  [^3]:
+  [^4]:
     If you cancel your sponsorship, GitHub schedules a cancellation request
-    which will become effective at the end of the billing cycle, which ends at
-    the 22nd of a month for monthly sponsorships. This means that even though
-    you cancel your sponsorship, you will keep your access to Insiders as long
-    as your cancellation isn't effective. All charges are processed by GitHub
-    through Stripe. As we don't receive any information regarding your payment,
-    and GitHub doesn't offer refunds, sponsorships are non-refundable.
+    which will become effective at the end of the billing cycle. This means
+    that even though you cancel your sponsorship, you will keep your access to
+    Insiders as long as your cancellation isn't effective. All charges are
+    processed by GitHub through Stripe. As we don't receive any information
+    regarding your payment, and GitHub doesn't offer refunds, sponsorships are
+    non-refundable.
 
 [:octicons-heart-fill-24:{ .mdx-heart } &nbsp; Join our <span class="mdx-sponsorship-count" data-mdx-component="sponsorship-count"></span> awesome sponsors][5]{ .md-button .md-button--primary .mdx-sponsorship-button }
 
@@ -111,9 +116,12 @@ The following features are currently exclusively available to sponsors:
 
 <div class="mdx-columns" markdown="1">
 
-- [x] [Stay on page when switching versions :material-new-box:][28]
-- [x] [Version warning :material-new-box:][26]
-- [x] [Custom admonition icons :material-new-box:][28]
+- [x] [Linking content tabs :material-new-box:][32]
+- [x] [Boosting pages in search :material-new-box:][30]
+- [x] [Tags (with search integration) :material-new-box:][29]
+- [x] [Stay on page when switching versions][28]
+- [x] [Version warning][26]
+- [x] [Custom admonition icons][28]
 - [x] [Code block annotations][25]
 - [x] [Anchor tracking ][24]
 - [x] [Section index pages][22]
@@ -168,22 +176,25 @@ the public for general availability.
 
 [24]: ../setup/setting-up-navigation.md#anchor-tracking
 [25]: ../reference/code-blocks.md#adding-annotations
-[26]: ../setup/setting-up-versioning#version-warning
+[26]: ../setup/setting-up-versioning.md#version-warning
 
 #### $ 5,000 – Aji Panca
 
 - [x] [Mermaid.js integration][27]
 - [x] [Stay on page when switching versions][28]
-- [ ] List of last searches
+- [x] [Tags (with search integration)][29]
 
   [27]: ../reference/diagrams.md
-  [28]: ../setup/setting-up-versioning#stay-on-page
+  [28]: ../setup/setting-up-versioning.md#stay-on-page
+  [29]: ../setup/setting-up-tags.md
 
 #### $ 6,000 – Trinidad Scorpion
 
+- [x] [Boosting pages in search][30]
 - [ ] Improved search result summaries
-- [ ] Table of contents shows which sections have search results
 - [ ] Stay on page when switching languages
+
+  [30]: ../setup/setting-up-site-search.md#boosting-a-page
 
 #### $ 7,000 – Royal Gold
 
@@ -193,19 +204,20 @@ the public for general availability.
 
 #### $ 8,000 – Scotch Bonnet
 
-- [x] [Custom admonition icons][29]
-- [ ] TBA
-- [ ] TBA
+- [x] [Custom admonition icons][31]
+- [x] [Linking content tabs][32]
+- [ ] List of last searches
 
-  [29]: ../reference/admonitions.md#changing-the-icons
+  [31]: ../reference/admonitions.md#changing-the-icons
+  [32]: ../reference/content-tabs.md#linking-content-tabs
 
 #### Future
 
-- [ ] [Material for MkDocs Live Edit][30]
+- [ ] [Material for MkDocs Live Edit][33]
 - [ ] New layouts and styles
 - [ ] Code block palette toggle
 
-  [30]: https://twitter.com/squidfunk/status/1338252230265360391
+  [33]: https://twitter.com/squidfunk/status/1338252230265360391
 
 ### Goals completed
 
@@ -238,7 +250,7 @@ the public for general availability.
 
   [7]: ../setup/setting-up-navigation.md#navigation-sections
   [8]: ../setup/setting-up-navigation.md#navigation-expansion
-  [9]: ../setup/setting-up-navigation.md#hide-the-sidebars
+  [9]: ../setup/setting-up-navigation.md#hiding-the-sidebars
   [10]: ../setup/setting-up-navigation.md#navigation-integration
   [11]: ../setup/setting-up-the-header.md#automatic-hiding
 
@@ -260,10 +272,23 @@ implemented behind feature flags; all configuration changes are
 backward-compatible. This means that your users will be able to build the
 documentation locally with Material for MkDocs and when they push their changes,
 it can be built with Insiders (e.g. as part of GitHub Actions). Thus, it's
-recommended to [install Insiders][31] only in CI, as you don't want to expose
+recommended to [install Insiders][34] only in CI, as you don't want to expose
 your `GH_TOKEN` to users.
 
-  [31]: ../publishing-your-site.md#github-pages
+  [34]: ../publishing-your-site.md#github-pages
+
+### Payment
+
+_We don't want to pay for sponsorship every month. Are there any other options?_
+
+Yes. You can sponsor on a yearly basis by [switching your GitHub account to a
+yearly billing cycle][35]. If for some reason you cannot do that, you could
+also create a dedicated GitHub account with a yearly billing cycle, which you
+only use for sponsoring (some sponsors already do that).
+
+One-time payments are not eligible for Insiders.
+
+  [35]: https://docs.github.com/en/github/setting-up-and-managing-billing-and-payments-on-github/changing-the-duration-of-your-billing-cycle
 
 ### Terms
 
@@ -272,7 +297,7 @@ commercial project. Can we use Insiders under the same terms and conditions?_
 
 Yes. Whether you're an individual or a company, you may use _Material for MkDocs
 Insiders_ precisely under the same terms as Material for MkDocs, which are given
-by the [MIT license][32]. However, we kindly ask you to respect the following
+by the [MIT license][36]. However, we kindly ask you to respect the following
 guidelines:
 
 - Please __don't distribute the source code__ of Insiders. You may freely use
@@ -283,7 +308,7 @@ guidelines:
 - If you cancel your subscription, you're removed as a collaborator and will
   miss out on future updates of Insiders. However, you may __use the latest
   version__ that's available to you __as long as you like__. Just remember that
-  [GitHub deletes private forks][33].
+  [GitHub deletes private forks][37].
 
-  [32]: ../license.md
-  [33]: https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/removing-a-collaborator-from-a-personal-repository
+  [36]: ../license.md
+  [37]: https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/removing-a-collaborator-from-a-personal-repository

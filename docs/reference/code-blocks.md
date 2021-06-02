@@ -91,18 +91,18 @@ configuring syntax highlighting of code blocks:
 :   :octicons-milestone-24: Default: `table` – The Highlight extension provides
     three ways to add line numbers, all of which are supported by Material for
     MkDocs. While `table` wraps a code block in a table, `inline` and
-    `pymdownx.inline` render line numbers as part of the line itself:
+    `pymdownx-inline` render line numbers as part of the line itself:
 
     ``` yaml
     markdown_extensions:
       - pymdownx.highlight:
-          linenums_style: pymdownx.inline
+          linenums_style: pymdownx-inline
     ```
 
     Note that `inline` will put line numbers next to the actual code, which
     means that they will be included when selecting text with the cursor or 
     copying a code block to the clipboard. Thus, the usage of `table` or
-    `pymdownx.inline` is recommended.
+    `pymdownx-inline` is recommended.
 
 _Material for MkDocs doesn't provide official support for the other options of
 this extension, so they may be supported but might yield unexpected results.
@@ -445,4 +445,4 @@ override it as part of your additional stylesheet:
   [26]: #use-pygments
   [27]: ../setup/changing-the-colors.md#color-scheme
   [28]: https://pygments.org/docs/tokens/#literals
-  [29]: https://github.com/squidfunk/mkdocs-material/blob/master/src/assets/stylesheets/main/extensions/markdown/_codehilite.scss
+  [29]: https://github.com/squidfunk/mkdocs-material/blob/master/src/assets/stylesheets/main/extensions/pymdownx/_highlight.scss
