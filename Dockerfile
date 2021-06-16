@@ -45,13 +45,19 @@ RUN \
     git \
     git-fast-import \
     openssh \
+    lftp \
   && apk add --no-cache --virtual .build gcc musl-dev \
   && pip install --no-cache-dir . \
   && \
     if [ "${WITH_PLUGINS}" = "true" ]; then \
       pip install --no-cache-dir \
-        "mkdocs-minify-plugin>=0.3" \
-        "mkdocs-redirects>=1.0"; \
+        'mkdocs-awesome-pages-plugin>=2.2.1' \
+        'mkdocs-git-revision-date-localized-plugin>=0.4' \
+        'mkdocs-minify-plugin>=0.3' \
+        'mkdocs-redirects>=1.0' \
+        'mkdocs-kroki-plugin' \
+        'plantuml-markdown' \
+        'mkdocs-tooltips'; \
     fi \
   && apk del .build gcc musl-dev \
   && \
@@ -75,5 +81,11 @@ WORKDIR /docs
 EXPOSE 8000
 
 # Start development server by default
-ENTRYPOINT ["mkdocs"]
-CMD ["serve", "--dev-addr=0.0.0.0:8000"]
+#ENTRYPOINT ["mkdocs"]
+#CMD ["serve", "--dev-addr=0.0.0.0:8000"]
+
+# Build this with (do note the '.' at the end of the line):
+# docker build -t tisgoud/mkdocs-material .
+
+# Publish the image with
+# docker push tisgoud/mkdocs-material:latest
