@@ -6,6 +6,16 @@ template: overrides/main.html
 
 ## Material for MkDocs
 
+### 7.1.10 <small>_ July 10, 2021</small>
+
+- Refactored appearance of back-to-top button
+- Fixed graceful handling of search when browsing locally
+
+### 7.1.9 <small>_ June 25, 2021</small>
+
+- Improved search language support for Thai and Hindi
+- Fixed #2761: License comments lined up at end of file
+
 ### 7.1.8 <small>_ June 12, 2021</small>
 
 - Refactored analytics integration (because of MkDocs 1.2)
